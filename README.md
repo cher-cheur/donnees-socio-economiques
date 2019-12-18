@@ -8,9 +8,7 @@ Il faut aller sur : #lien pour téléchager les deux fichiers des données et d'
 Nous utiliserons Python et les bibliothèques: sklearn, numpy, seaborn & matplotlib, sont à importer.
 
 # Manipulaion des données
-Première chose à remarquer est que les attributs des colonnes du fichier communities.data n'y sont pas et qu'il faut réccupérer ces attributs du fichier communities.name, créer un nouveau fichier attributes.csv puis importer ce dernier et communities.data à notre environnement de travail  en faisant le lien entre les deux.
-
-Ensuite nous allons attribuer la liste des attributs 
+Première chose à remarquer est que les attributs des colonnes du fichier communities.data n'y sont pas et qu'il faut réccupérer ces attributs du fichier communities.name, créer un nouveau fichier attributes.csv puis importer ce dernier et communities.data à notre environnement de travail  en créant le lien entre les deux.
 
 # Nettoyage des données
 Après avoir affiché le jeu de données correctement, il est clair que les 4 premières variables sont catégoriques, nous les retirons alors. 
