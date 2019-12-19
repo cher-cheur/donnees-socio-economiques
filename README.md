@@ -17,7 +17,9 @@ Nous trouvons qu'une variable "OtherPerCop" a une seule valeur manquante, tandis
 
 Le jeu de données sur lequel nous allons opérer est de 101 variables et 1994 obsevartions.
 
-#Distribution de la variable à prédire et la matrice de corrélation?
+On affiche la matrice la corrélation pour apercevoir les niveaux de correlations entre les variables de notre jeu de données.
+
+Nous allons procéder dans ce qui suit sans retirer les variables corrélés et nous verrons plus tard si un modèle sans certaines ou toutes les variables performent mieux que le modèle initiale.
 
 # Répartition de l'ensemble d'entraînement et de validation 
 Une fois avoir défini l'ensemble des variables explicatives et la variable à prédire, nous répartissons les ensembles d'entraînement et de validation.
@@ -31,4 +33,4 @@ Nous allons déployer une forêt aléatoire de 100 estimateurs d'arbres de déci
 # Optimisation des hyperparamètres de la forêt aléatoire
 Pour cela nous créons une boucle testant les Random_Stae de 0 à 100 et afficher les résultats du modèle ayant eu le meilleur score.
 
-(cpf : c'est pas fini)
+# Retrait des variabes corrélés
