@@ -31,6 +31,6 @@ Nous allons centrer et réduire nos 100 variables explicatives.
 Nous allons déployer une forêt aléatoire de 100 estimateurs d'arbres de décision sur l'ensemble d'entrâinement et imprimerons le score de ce modèle. Ainsi que la moyenne absolue d'érreur et la moyenne d'erreurs au carré. On essayera ensuite d'avoir des performances meilleures en le comparant à ce modèle.
 
 # Optimisation des hyperparamètres de la forêt aléatoire
-Pour cela nous créons une boucle testant les Random_Stae de 0 à 100 et afficher les résultats du modèle ayant eu le meilleur score.
+Pour cela nous créons une boucle testant les Random_Stae de 0 à 50 et afficher les résultats du modèle ayant eu le meilleur score.
 
 # Retrait des variabes corrélées...
