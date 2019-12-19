@@ -33,4 +33,4 @@ Nous allons déployer une forêt aléatoire de 100 estimateurs d'arbres de déci
 # Optimisation des hyperparamètres de la forêt aléatoire
 Pour cela nous créons une boucle testant les Random_Stae de 0 à 100 et afficher les résultats du modèle ayant eu le meilleur score.
 
-# Retrait des variabes corrélés
+# Retrait des variabes corrélées...
