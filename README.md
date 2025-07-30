@@ -1,38 +1,118 @@
-# Données socio-économiques et criminelles
-L'objectif est de construire une forêt aléatoire d'arbres de dé pour prédire le nombre de crimes violents par habitant. A partir d'une combinaison des données socio-économique du CENSUS 1990 des Etats-Unis et des données criminels du FBI UCR en 1995.  
+# Projet : Prédiction du Nombre de Crimes Violents par Habitant
 
-# Réccupérer les données
-Il faut aller sur : http://archive.ics.uci.edu/ml/datasets/communities+and+crime pour téléchager les deux fichiers des données et d'explication. En essayant d'ouvrir les fichiers avec un éditeur de texte, vous remarquerez qu'il faudra les manipuler pour avoir un jeu de données correcte. 
+## Vue d'Ensemble du Projet
 
-# Environnement de travail
-Nous utiliserons Python et les bibliothèques: sklearn, numpy, seaborn & matplotlib, sont à importer.
+Ce projet de Machine Learning vise à prédire le nombre de crimes violents par habitant dans les communautés des États-Unis. En combinant des données socio-économiques du recensement américain de 1990 (CENSUS) avec des données criminelles issues du rapport FBI UCR de 1995, nous avons développé un modèle de régression robuste.
 
-# Manipulaion des données
-Première chose à remarquer est que les attributs des colonnes du fichier communities.data n'y sont pas et qu'il faut réccupérer ces attributs du fichier communities.name, créer un nouveau fichier attributes.csv puis importer ce dernier et communities.data à notre environnement de travail en créant le lien entre les deux.
+L'objectif est de fournir un outil analytique capable d'estimer les niveaux de criminalité violente, ce qui pourrait aider à l'allocation des ressources ou à la compréhension des facteurs influents. Ce projet est un exemple complet d'un pipeline de Machine Learning, de la préparation des données à la modélisation avancée et au déploiement potentiel.
 
-# Nettoyage des données
-Après avoir affiché le jeu de données correctement, il est clair que les 4 premières variables sont catégoriques, nous les retirons alors. Nous nous retrouvons avec un jeu de données de 1994 observations et 123 variables quantitatives.
+## Fonctionnalités Clés & Méthodologie
 
-Nous trouvons qu'une variable "OtherPerCop" a une seule valeur manquante, tandis que 21 autres ont majoritairement des valeurs manquantes. Nous retirons ces dernières et remplaçons celle de "OtherPerCop" par la moyenne de ses observations.
+  * [cite\_start]**Sources de Données Riches :** Utilisation de données publiques et reconnues (US Census, FBI UCR, US LEMAS survey [cite: 4]).
+  * **Nettoyage et Préparation Avancée des Données :**
+      * [cite\_start]**Gestion des Valeurs Manquantes :** Imputation ciblée (moyenne pour `OtherPerCap`) et suppression des colonnes avec un trop grand nombre de valeurs manquantes (\>50%, notamment les données LEMAS [cite: 46]).
+      * **Sélection de Caractéristiques par Corrélation :** Identification des prédicteurs les plus pertinents en retenant uniquement les variables ayant une corrélation absolue supérieure à 0.40 avec la variable cible (`ViolentCrimesPerPop`). Ce seuil a été choisi pour réduire la dimensionalité du modèle, améliorer son interprétabilité en se concentrant sur les facteurs les plus influents, et diminuer le bruit dans les données.
+  * **Modélisation Comparative :**
+      * Comparaison de plusieurs algorithmes de régression (Régression Linéaire, Ridge, SVR, Arbre de Décision, Random Forest) via la validation croisée (R² moyen sur 5 folds) pour identifier le plus performant.
+      * Le **Random Forest Regressor** a été sélectionné comme modèle de base en raison de ses performances initiales prometteuses.
+  * **Optimisation des Hyperparamètres :** Utilisation de `GridSearchCV` pour trouver la meilleure combinaison d'hyperparamètres pour le Random Forest, améliorant ainsi sa précision et sa généralisabilité.
+  * **Évaluation Rigoureuse :** Mesure de la performance du modèle optimisé sur un ensemble de test indépendant à l'aide de métriques telles que le R², l'Erreur Absolue Moyenne (MAE) et l'Erreur Quadratique Moyenne (MSE).
+  * **Exportation du Modèle :** Le modèle entraîné et optimisé, ainsi que le `StandardScaler` (pour la normalisation future des données d'entrée), sont sauvegardés pour une utilisation facile dans des applications tierces.
 
-Le jeu de données sur lequel nous allons opérer est de 101 variables et 1994 obsevartions.
+## Structure du Projet
 
-Nous créons la matrice la corrélation pour apercevoir les niveaux de correlations entre les variables de notre jeu de données.
-Nous retirons les variables les moins corrélées avec la variable à prédire, et nous gardons que les variables corrélées à plus de 40% avec la variable à prédire. Nous nous retrouvons alors avec 26 variables explicatives.
+Le projet est organisé pour une clarté maximale et une réutilisation aisée :
 
-# Répartition de l'ensemble d'entraînement et de validation 
-Une fois avoir défini l'ensemble des variables explicatives et la variable à prédire, nous répartissons les ensembles d'entraînement et de validation.
+```
+.
+├── README.md                 # Description détaillée du projet
+├── notebook/
+│   └── crime_prediction.ipynb           # Notebook Jupyter détaillant l'analyse et la modélisation
+├── data/
+│   ├── communities.data      # Jeu de données principal
+│   └── communities.names     # Fichier de métadonnées et noms d'attributs
+├── models/                   # Répertoire pour les modèles sauvegardés
+│   ├── best_random_forest_model.joblib
+│   ├── scaler.joblib
+│   └── selected_features.joblib
+├── app.py                    # (À venir) Fichier pour l'application Streamlit
+├── requirements.txt          # Liste des dépendances Python
+└── LICENSE             # Informations sur la licence du projet
+```
 
-# Normaliser les variables explicatives
-Nous allons centrer et réduire nos variables explicatives.
+## Technologies & Dépendances
 
-# Créer le modèle seuil
-Nous allons déployer une forêt aléatoire de 100 estimateurs d'arbres de décision sur l'ensemble d'entrâinement et imprimerons le score de ce modèle. Ainsi que la moyenne absolue d'érreur et la moyenne d'erreurs au carré. On essayera ensuite d'avoir des performances meilleures en le comparant à ce modèle.
+Ce projet est développé en Python et utilise les bibliothèques suivantes :
 
-# Optimisation des paramètres du train_test_split
-Pour cela nous créons une boucle testant les Random_Stae de 0 à 50 et afficher les résultats du modèle ayant eu le meilleur score.
+  * `pandas` : Manipulation et analyse de données.
+  * `numpy` : Opérations numériques.
+  * `matplotlib` & `seaborn` : Visualisation de données.
+  * `scikit-learn` : Modélisation Machine Learning (régression, prétraitement, sélection de modèles).
+  * `joblib` : Sauvegarde et chargement de modèles Python.
+  * `streamlit` : (À venir) Pour la création de l'application web interactive.
 
-# Conclusion et amélioration
-Avec de telle performance, le modèle construit peut être généralisé sur des nouvelles données mais cela n’empêche pas de le faire évoluer en :
-    • Trouvant le seuil de corrélation maximisant le score du modèle.
-    • S’il y a assez de données par état« state » – sachant que chaque état a ses propres lois -  créer une forêt aléatoire par état et comparer variables explicatives.
+Pour installer toutes les dépendances, vous pouvez utiliser le fichier `requirements.txt` (à créer ou mettre à jour avec les versions exactes) :
+
+```bash
+pip install -r requirements.txt
+```
+
+## Comment Exécuter le Projet
+
+### 1\. Cloner le Dépôt
+
+```bash
+git clone https://github.com/cher-cheur/donnees-socio-economiques.git
+cd donnees-socio-economiques
+```
+
+### 2\. Configurer l'Environnement
+
+Il est recommandé d'utiliser un environnement virtuel :
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Sous Linux/macOS
+# ou `venv\Scripts\activate` sous Windows
+pip install -r requirements.txt
+```
+
+### 3\. Préparer les Données
+
+Assurez-vous que les fichiers `communities.data` et `communities.names` sont bien placés dans le dossier `data/`.
+
+### 4\. Exécuter le Notebook d'Analyse
+
+Le notebook `crime_prediction.ipynb` contient toutes les étapes d'analyse, de nettoyage des données, de modélisation et d'évaluation.
+
+```bash
+jupyter notebook notebook/crime_prediction.ipynb
+```
+
+Suivez les cellules du notebook séquentiellement. La dernière cellule exportera le modèle entraîné et le `StandardScaler` dans le dossier `models/`.
+
+### 5\. Lancer l'Application Streamlit (À venir)
+
+Une fois le fichier `app.py` créé (à l'étape future de notre processus), vous pourrez lancer l'application Streamlit ainsi :
+
+```bash
+streamlit run app.py
+```
+
+## Résultats & Conclusions
+
+Le modèle Random Forest optimisé a démontré des performances robustes sur l'ensemble de test, avec un score R² significativement amélioré par rapport au modèle de référence. L'analyse des caractéristiques a permis d'identifier un sous-ensemble pertinent de variables socio-économiques et démographiques qui sont des prédicteurs clés du nombre de crimes violents par habitant.
+
+Ce projet met en lumière l'importance d'un pipeline de données rigoureux, de la sélection des caractéristiques pertinentes à l'optimisation des modèles, pour obtenir des prédictions fiables et exploitables.
+
+## Améliorations Futures
+
+  * **Hyperparamétrage Avancé :** Explorer des techniques d'optimisation plus sophistiquées comme `RandomizedSearchCV` ou les optimisations bayésiennes pour affiner davantage les hyperparamètres.
+  * **Ingénierie de Caractéristiques Avancée :** Créer de nouvelles caractéristiques à partir des données existantes (par exemple, ratios, interactions entre variables) qui pourraient capturer des relations plus complexes.
+  * **Autres Modèles :** Tester des modèles plus avancés comme XGBoost ou LightGBM.
+  * **Analyse par État :** Si les données le permettent, développer des modèles spécifiques à chaque état pour tenir compte des variations régionales.
+  * **Déploiement Complet :** Finaliser l'application Streamlit pour permettre aux utilisateurs d'interagir facilement avec le modèle et d'obtenir des prédictions en temps réel.
+
+## Licence
+
+Ce projet est sous la licence [GNU GENERAL PUBLIC LICENSE Version 3, 29 Juin 2007](https://www.google.com/search?q=license/LICENSE).

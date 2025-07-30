@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb-filter
+
+# Data files (usually too large or derived)
+/data/*.data # Si les fichiers de données brutes sont trop volumineux pour être versionnés
+/data/*.csv  # Si les fichiers CSV sont générés ou trop grands
+/data/*.names # Ou si ce fichier est considéré comme non essentiel au dépôt
+
+# Models (binary files, can be large)
+/models/
+
+# Logs
+*.log
+log/
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.bak
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Streamlit specific (if applicable later)
+.streamlit/
